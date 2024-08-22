@@ -1,21 +1,35 @@
 #include<iostream>
+#include<string>
+#include<cstring>
+using namespace std;
 
 
-// function to remove everything else other than alphabet and digits.
-// void cleanPlainText(char* plainTxt, int txtLen){
+// function to remove anything other than alphabets and digits.
+void cleanPlainText(char* plainTxt, int txtLen){
     
-//     for(int i=0; i < txtLen; i++){
+    int idx = 0;
+    for(int i=0; i < txtLen; i++){
 
-//         char chr = plainTxt[i];
-//         bool validChar = ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z' ) ||(c >= '0' && c <= '9'));
-        
-//         if(validChar){
-//             plainTxt[]
-//         }
-//     }
+        char chr = plainTxt[i];
+        bool validChars = ((chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z' ) ||(chr >= '0' && chr <= '9'));
+        if(validChars){
+            plainTxt[idx++] = plainTxt[i];
+        }
+    }
 
-// } 
+    plainTxt[idx] = '\0';
+}
+
+
+// 
+
+
+
+
+
+
 
 int main(){
-    std::cout<<"hello!";
+
+    
 }
