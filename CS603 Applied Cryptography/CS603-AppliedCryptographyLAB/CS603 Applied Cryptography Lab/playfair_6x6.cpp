@@ -40,7 +40,14 @@ void cleanPlainText(string& text){
     
 }
 
-
+void printMatrix(char matrix[][6]){
+    for (int i = 0; i< 6; i++){
+        for(int j = 0; j<6; j++){
+            cout << matrix[i][j] << '\t';
+        }
+    cout << '\n';
+    }
+}
 
 void prepareKeyMatrix(string& key, char matrix[][6]){
     bool used[36] = {false};
@@ -74,7 +81,7 @@ void prepareKeyMatrix(string& key, char matrix[][6]){
     }
 
     // filling matrix with used digits
-    for(char ch = '0'; ch < '9'; ch++){
+    for(char ch = '0'; ch <= '9'; ch++){
         int idx = ch - '0'+26;
         if(!used[idx]){
             matrix[row][col++] = ch;
@@ -165,8 +172,8 @@ string Decrypt(const string& text, const char matrix[][6]){
         
         } else if(col1 == col2){
             //same col
-            decryptText += matrix[(row1 + 5 -1) % 6][col1];
-            decryptText += matrix[(row2 + 5 -1) % 6][col2];
+            decryptText += matrix[(row1 + 6 -1) % 6][col1];
+            decryptText += matrix[(row2 + 6 -1) % 6][col2];
         
         }else{
             // Non-same row && Non-same col
@@ -197,6 +204,9 @@ int main(){
     cleanPlainText(plainText);
     prepareKeyMatrix(key,matrix);
 
+    cout << "________________________________" << endl;
+    printMatrix(matrix);
+    cout<<"------------------------------------"<< endl;
     E = Encrypt(plainText, matrix);
     cout << "Encryption : "<< E<<endl;
     D = Decrypt(E, matrix);
