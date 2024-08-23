@@ -2,6 +2,7 @@
 #include <cctype>
 #include <cmath>
 #include <string>
+#include <unordered_set>
 using namespace std;
 
 
@@ -35,8 +36,6 @@ void cleanPlainText(string& text){
 
     // checking text even length
     if(text.length() % 2 != 0) text.push_back('X');
-
-    cout << " ppp:::: "<< text << endl;
     
 }
 
@@ -142,7 +141,7 @@ string Encrypt(const string& text, const char matrix[][6]){
 string removeFillerX(string& text){
     string finalText;
     for (size_t i = 0; i < text.length(); i++){
-        if( i+1 < text.length() && text[i] == text[i+2] && text[i] == 'X'){
+        if( i < text.length() && text[i] == text[i+2] && text[i+1] == 'X'){
         finalText += text[i];
         i++; 
     } else{
@@ -151,7 +150,6 @@ string removeFillerX(string& text){
     }
     return finalText;
 }
-
 
 string Decrypt(const string& text, const char matrix[][6]){
 
@@ -182,35 +180,84 @@ string Decrypt(const string& text, const char matrix[][6]){
 
         }   
     }
-     // remving filler X
-    return removeFillerX(decryptText);
+    
+    return decryptText;
+}
+
+bool isValid(const string& txt){
+    unordered_set<char> seenChars;
+
+    for (char ch: txt){
+        if (!isalnum(ch)){
+            return false;
+        }
+
+        if (seenChars.find(ch) != seenChars.end()){
+            return false;
+        }
+
+        seenChars.insert(ch);
+    }   
+    return true;
+
+
+}
+
+void printPair(const string& txt){
+    for (size_t i = 0; i < txt.length(); i+= 2){
+        cout << txt[i]<<txt[i+1]<<"\t";
+    }
 }
 
 int main(){
 
     string key;
     string text;
-    cout << "Enter Key" <<endl;
+    cout << "Enter Key: " <<endl;
     getline(cin, key);
 
-    cout << "Enter text" <<endl;
+    if(!isValid(key)){
+        cout<< "--------------------------------------------"<< endl;
+        cout << "\nThe key you have entered an invalid. \nRe-run the program!";
+        cout << "\n" <<"\n" << "--------------------------------------------"<<"\n";
+        return 0;
+    }
+
+    cout << "Enter text:" <<endl;
     getline(cin, text);
 
     char matrix[6][6];
-    string plainText = text;
+    string P = text;
     string E;
     string D;
 
-    cleanPlainText(plainText);
+    cleanPlainText(P);
     prepareKeyMatrix(key,matrix);
-
-    cout << "________________________________" << endl;
+    cout<<"\n The Key Matrix used for encryption"<< endl;
+    cout << "__________________________________________" << endl;
     printMatrix(matrix);
-    cout<<"------------------------------------"<< endl;
-    E = Encrypt(plainText, matrix);
-    cout << "Encryption : "<< E<<endl;
+    cout<<"__________________________________________"<< endl;
+
+
+    cout<< "Original Message M : " << "\t"<< text << endl;
+
+    cout << "\nPlain Text P :   " ;
+    cout<<"\t" ;
+    printPair(P);
+
+    E = Encrypt(P, matrix);
+    cout << "\nEncrypted Text E :   " ;
+    cout<<"\t" ;
+    printPair(E);
+
     D = Decrypt(E, matrix);
-    cout << "Decrypted Text : "<< D<< endl;
+    cout << "\nDecrypted Text D :   ";
+    cout<<"\t" ;
+    printPair(D);
+
+    cout<< "\nDecrypted Message M_ : " << "\t"<< removeFillerX(D) << endl;
+
+
 
 
     
