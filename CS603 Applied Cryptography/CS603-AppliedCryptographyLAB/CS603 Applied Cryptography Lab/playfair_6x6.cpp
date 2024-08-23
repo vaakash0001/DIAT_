@@ -84,20 +84,83 @@ void prepareKeyMatrix(string& key, char matrix[][6]){
 
 }
 
+void lookupMatrix(const char matrix[][6], char ch, int& row, int& col){
+    for (int i = 0; i < 6; i++){
+        for(int j = 0; j < 6; j++){
+            if(matrix[i][j] == ch){
+                row = i;
+                col = j;
 
+            }
+        }
+    }
+}
 
 string Encrypt(const string& text, const char matrix[][6]){
+
+    // This function uses Playfair 6x6 encryption
     string encryptedText;
     size_t len = text.length();
     
-    for (size_t i )
+    for (size_t i = 0; i< len; i+= 2){
+        int row1, row2, col1, col2;
 
-    
+        lookupMatrix(matrix, text[i], row1, col1);
+        lookupMatrix(matrix, text[i+1], row2, col2);
+
+        if(row1 == row2){
+            //same row
+            encryptedText += matrix[row1][(col1 + 1) % 6];
+            encryptedText += matrix[row2][(col2 + 1) % 6];
+        
+        } else if(col1 == col2){
+            //same col
+            encryptedText += matrix[(row1+1) % 6][col1];
+            encryptedText += matrix[(row2+1) % 6][col2];
+        
+        }else{
+            // Non-same row && Non-same col
+            encryptedText += matrix[row1][col2];
+            encryptedText += matrix[row2][col1];
+
+        }   
+    }
+    return encryptedText;
+
 }
 
-string Decrypt();
+string Decrypt(const string& text, const char matrix[][6]){
 
-void main(){
+    // this function uses Playfair 6x6 Decryption
+    string decryptText;
+    size_t len = text.length();
+
+    for (size_t i = 0; i< len; i+= 2){
+        int row1, row2, col1, col2;
+
+        lookupMatrix(matrix, text[i], row1, col1);
+        lookupMatrix(matrix, text[i+1], row2, col2);
+
+        if(row1 == row2){
+            //same row
+            dencryptedText += matrix[row1][(col1 + 6 -1)  % 6];
+            dencryptedText += matrix[row1][(col2 + 6 -1) % 6];
+        
+        } else if(col1 == col2){
+            //same col
+            dencryptedText += matrix[(row1 + 5 -1) % 6][col1];
+            dencryptedText += matrix[(row2 + 5 -1) % 6][col2];
+        
+        }else{
+            // Non-same row && Non-same col
+            dencryptedText += matrix[row1][col2];
+            dencryptedText += matrix[row2][col1];
+
+        }   
+    }
+}
+
+int main(){
 
     string key;
     string text;
@@ -110,11 +173,14 @@ void main(){
     char matrix[6][6];
 
     string plainText = text;
-    string encryptedTex;
+    string E;
     string decryptedText;
 
     cleanPlainText(plainText);
-    prepareKeyMatrix(key,matrix)
+    prepareKeyMatrix(key,matrix);
+
+    E = Encrypt(plainText, matrix);
+    cout << "Encryption : "<< E<<endl;
 
     
 }
