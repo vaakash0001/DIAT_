@@ -6,14 +6,16 @@ using namespace std;
 
 
 void handleAlphabetCase(string& text){
-
+    string txt; // empty text
     // changing upper case to lower case
     for (char& ch : text){
 
-        ch = toupper(ch);
-        //change J to I
-        if (ch == 'J') ch = 'I';
+        if(isalnum(ch)){
+            ch = toupper(ch);
+            txt += ch;
+        }
     }
+    text = txt;
 }
 
 void handleDiGraphs(string& text){
@@ -33,6 +35,8 @@ void cleanPlainText(string& text){
 
     // checking text even length
     if(text.length() % 2 != 0) text.push_back('X');
+
+    cout << " ppp:::: "<< text << endl;
     
 }
 
@@ -59,7 +63,6 @@ void prepareKeyMatrix(string& key, char matrix[][6]){
 
     // filling matrix with unused chars of alphabets
     for (char ch = 'A'; ch <= 'Z'; ch++){
-        if (ch == 'J') continue; // already replaced with 'I'
         int idx = ch - 'A';
         if(!used[idx]){
             matrix[row][col++] = ch;
@@ -187,7 +190,6 @@ int main(){
     getline(cin, text);
 
     char matrix[6][6];
-
     string plainText = text;
     string E;
     string D;
