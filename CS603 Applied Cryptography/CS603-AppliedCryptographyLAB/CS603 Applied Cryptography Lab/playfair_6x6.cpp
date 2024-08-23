@@ -40,7 +40,7 @@ void cleanPlainText(string& text){
 
 void prepareKeyMatrix(string& key, char matrix[][6]){
     bool used[36] = {false};
-    int row,col = 0;
+    int row = 0,col = 0;
     
     handleAlphabetCase(key);
 
@@ -129,6 +129,20 @@ string Encrypt(const string& text, const char matrix[][6]){
 
 }
 
+string removeFillerX(string& text){
+    string finalText;
+    for (size_t i = 0; i < text.length(); i++){
+        if( i+1 < text.length() && text[i] == text[i+2] && text[i] == 'X'){
+        finalText += text[i];
+        i++; 
+    } else{
+        finalText += text[i];
+        }
+    }
+    return finalText;
+}
+
+
 string Decrypt(const string& text, const char matrix[][6]){
 
     // this function uses Playfair 6x6 Decryption
@@ -143,21 +157,23 @@ string Decrypt(const string& text, const char matrix[][6]){
 
         if(row1 == row2){
             //same row
-            dencryptedText += matrix[row1][(col1 + 6 -1)  % 6];
-            dencryptedText += matrix[row1][(col2 + 6 -1) % 6];
+            decryptText += matrix[row1][(col1 + 6 -1)  % 6];
+            decryptText += matrix[row1][(col2 + 6 -1) % 6];
         
         } else if(col1 == col2){
             //same col
-            dencryptedText += matrix[(row1 + 5 -1) % 6][col1];
-            dencryptedText += matrix[(row2 + 5 -1) % 6][col2];
+            decryptText += matrix[(row1 + 5 -1) % 6][col1];
+            decryptText += matrix[(row2 + 5 -1) % 6][col2];
         
         }else{
             // Non-same row && Non-same col
-            dencryptedText += matrix[row1][col2];
-            dencryptedText += matrix[row2][col1];
+            decryptText += matrix[row1][col2];
+            decryptText += matrix[row2][col1];
 
         }   
     }
+     // remving filler X
+    return removeFillerX(decryptText);
 }
 
 int main(){
@@ -174,13 +190,16 @@ int main(){
 
     string plainText = text;
     string E;
-    string decryptedText;
+    string D;
 
     cleanPlainText(plainText);
     prepareKeyMatrix(key,matrix);
 
     E = Encrypt(plainText, matrix);
     cout << "Encryption : "<< E<<endl;
+    D = Decrypt(E, matrix);
+    cout << "Decrypted Text : "<< D<< endl;
+
 
     
 }
