@@ -1,0 +1,29 @@
+1. *Windows 11 has Access Control Lists for protection state definitions.*
+   - *True.* Windows 11 uses Access Control Lists (ACLs) to define protection for objects, controlling access permissions at a granular level.
+
+2. *TCB of any OS consists of Kernel code only.*
+   - *False.* The Trusted Computing Base (TCB) includes not just the kernel but also any hardware, firmware, and software components that are critical to security, such as authentication mechanisms and secure storage.
+
+3. *Lampson’s access matrix depicts a mandatory protection system.*
+   - *False.* Lampson’s access matrix describes a discretionary access control system, where users control access to objects based on their identity and the permissions granted.
+
+4. *MLS in Multics protects the integrity of data segments.*
+   - *False.* The Multics system's primary focus in its MLS (Multi-Level Security) model is on confidentiality rather than integrity. The Bell-LaPadula model used in MLS enforces security policies related to confidentiality.
+
+5. *Complete Mediation & Verifiability are the sufficient conditions for enforcing the secure access control (Reference Monitor).*
+   - *False.* Complete Mediation and Verifiability are necessary conditions, but they are not sufficient alone. A secure access control system also requires conditions like Tamper-Proofing and Small Trusted Computing Base.
+
+6. *Recent device explosion attacks could be prevented to a certain extent with the help of Verification of the software/hardware.*
+   - *True.* Verifying the software and hardware (e.g., using formal methods, code reviews, and vulnerability scanning) can help mitigate attacks caused by malicious or compromised components.
+
+7. *For given Access Matrix (Fig.1) in Windows OS, J’s private key in O1 can be leaked to S2.*
+   - *True.* In the matrix, S2 has both read and write access to O1, meaning that J’s private key stored in O1 could be read by S2.
+
+8. *For given Access Matrix (Fig.1) in Multics OS, J’s private key in O1 can be leaked to S2.*
+   - *False.* In a Multics environment, leakage would not be allowed due to its strict enforcement of access controls and classification levels. J operates at a secret level, while S2 is unclassified.
+
+9. *In Linux, a non-root user cannot change the access control permission of any file.*
+   - *True.* In Linux, only the root user (or users with elevated privileges) can change file permissions using commands like chmod.
+
+10. *In Multics, say a process at "top-secret" level is infected by a Trojan that allows its execution at a higher privilege ring. This Trojan can leak top-secret data to another process at a "secret" level.*
+    - *True.* This describes a covert channel or Trojan horse attack, where a Trojan at a higher security level can potentially leak data to lower levels. This violates the no-write-down rule in the Bell-LaPadula model, which is used in Multics.

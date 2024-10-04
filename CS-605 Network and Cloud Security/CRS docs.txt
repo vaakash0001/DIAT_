@@ -1,0 +1,6 @@
+CS605: Network and Cloud Security
+
+Main link: https://sites.google.com/view/profcrsk/ce664ancs
+
+Networking essentials course: https://www.netacad.com/career-paths/network-technician?courseLang=en-US
+Learn Cisco packet tracer: https://skillsforall.com/learningcollections/cisco-packet-tracer
